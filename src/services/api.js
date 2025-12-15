@@ -755,3 +755,31 @@ export const api = {
     }
   },
 };
+,
+
+  // Audit Logs
+  getAuditLogs: async (params = {}) => {
+    try {
+      const queryParams = new URLSearchParams();
+      if (params.page) queryParams.append("page", params.page);
+      if (params.limit) queryParams.append("limit", params.limit);
+      if (params.username) queryParams.append("username", params.username);
+      if (params.action) queryParams.append("action", params.action);
+      if (params.date_from) queryParams.append("date_from", params.date_from);
+      if (params.date_to) queryParams.append("date_to", params.date_to);
+      if (params.ip) queryParams.append("ip", params.ip);
+
+      const url = `${BASE_URL}/audit/logs${queryParams.toString() ? "?" + queryParams.toString() : ""}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: getAuthHeader(),
+        credentials: "include",
+      });
+      return handleResponse(response);
+    } catch (error) {
+      console.error("Error fetching audit logs:", error);
+      throw error;
+    }
+  },
+};
