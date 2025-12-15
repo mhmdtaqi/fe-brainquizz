@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
+import RoleGuard from "./components/RoleGuard";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -26,6 +27,7 @@ import SoalManagementPage from "./pages/admin/SoalManagementPage";
 import KuisManagementPage from "./pages/admin/KuisManagementPage";
 import AnalyticsPage from "./pages/admin/AnalyticsPage";
 import RecommendationPage from "./pages/admin/RecommendationPage";
+import AuditPage from "./pages/admin/AuditPage";
 import LeaderboardPage from "./pages/student/LeaderboardPage";
 import AchievementsPage from "./pages/student/AchievementsPage";
 import StudyPlannerPage from "./pages/student/StudyPlannerPage";
@@ -85,6 +87,18 @@ const App = () => {
             <PrivateRoute>
               <LayoutWrapper>
                 <PendidikanPage />
+              </LayoutWrapper>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/audit"
+          element={
+            <PrivateRoute>
+              <LayoutWrapper>
+                <RoleGuard requiredRole="admin">
+                  <AuditPage />
+                </RoleGuard>
               </LayoutWrapper>
             </PrivateRoute>
           }
