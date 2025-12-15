@@ -755,7 +755,7 @@ export const api = {
     }
   },
 };
-,
+
 
   // Audit Logs
   getAuditLogs: async (params = {}) => {
@@ -781,5 +781,4 @@ export const api = {
       console.error("Error fetching audit logs:", error);
       throw error;
     }
-  },
-};
+  }
