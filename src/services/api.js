@@ -262,7 +262,7 @@ export const api = {
     }
   },
 
-  deleteTingkatan: async (id) => {
+  deleteTingkaten: async (id) => {
     try {
       const response = await fetch(
         `${BASE_URL}/tingkatan/delete-tingkatan/${id}`,
@@ -454,7 +454,7 @@ export const api = {
     }
   },
 
-  // Join Class with Code - USING CORRECT BACKEND ENDPOINTS
+  // Join Class with Code
   getJoinedClasses: async () => {
     try {
       const response = await fetch(`${BASE_URL}/kelas/get-kelas-by-user`, {
@@ -498,14 +498,12 @@ export const api = {
     }
   },
 
-  // Get students in a class (API not implemented yet - return mock data)
+  // Get students in a class
   getStudentsByKelasId: async (kelasId) => {
-    // API endpoint belum diimplementasi di backend
-    // Return mock response tanpa melakukan HTTP request
     console.log(`getStudentsByKelasId(${kelasId}): API not implemented, returning mock data`);
     return {
       success: true,
-      data: [], // Empty array = no students yet
+      data: [],
       message: "API get-students belum diimplementasi di backend"
     };
   },
@@ -632,7 +630,6 @@ export const api = {
 
   addSoal: async (data) => {
     try {
-      // Ensure options is properly formatted as JSON string
       let optionsJson;
       if (typeof data.options === 'string') {
         optionsJson = data.options;
@@ -646,7 +643,7 @@ export const api = {
 
       const soalData = {
         question: data.question,
-        options_json: optionsJson,  // This will be mapped to Options field in backend
+        options_json: optionsJson,
         correct_answer: data.correct_answer,
         kuis_id: parseInt(data.kuis_id),
       };
@@ -666,7 +663,6 @@ export const api = {
 
   updateSoal: async (id, data) => {
     try {
-      // Ensure options is properly formatted as JSON string
       let optionsJson;
       if (typeof data.options === 'string') {
         optionsJson = data.options;
@@ -715,18 +711,17 @@ export const api = {
   // Hasil Kuis
   submitJawaban: async (answers) => {
     try {
-      // Format answers according to backend SoalAnswer model
       const formattedAnswers = answers.map((answer) => ({
-        Soal_id: parseInt(answer.soal_id),      // Backend expects Soal_id
-        Answer: answer.selected_answer,         // Backend expects Answer
-        User_id: parseInt(answer.user_id),      // Backend expects User_id
+        Soal_id: parseInt(answer.soal_id),
+        Answer: answer.selected_answer,
+        User_id: parseInt(answer.user_id),
       }));
 
       const response = await fetch(`${BASE_URL}/hasil-kuis/submit-jawaban`, {
         method: "POST",
         headers: getAuthHeader(),
         credentials: 'include',
-        body: JSON.stringify(formattedAnswers),  // Send array directly, not wrapped in object
+        body: JSON.stringify(formattedAnswers),
       });
 
       const data = await response.json();
@@ -740,7 +735,6 @@ export const api = {
     }
   },
 
-  // OPTIMIZED: Get all quiz results for current user in single API call
   getMyHasilKuis: async () => {
     try {
       const response = await fetch(`${BASE_URL}/hasil-kuis/my-results`, {
@@ -754,8 +748,6 @@ export const api = {
       throw error;
     }
   },
-};
-
 
   // Audit Logs
   getAuditLogs: async (params = {}) => {
@@ -782,3 +774,4 @@ export const api = {
       throw error;
     }
   }
+};
